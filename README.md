@@ -1,5 +1,5 @@
 # thelook_ecommerce_purchase_behaviour
-Purchase Behaviour Data Model in BigQuery SQL and BI Report in Power BI.
+Purchase Behaviour Data Model in BigQuery SQL.
 
 DATA MODEL EXPLANATION
 
