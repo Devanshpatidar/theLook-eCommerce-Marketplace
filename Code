@@ -1,0 +1,25 @@
+SELECT
+  u.id as User_id ,
+  u.email,
+  u.gender,
+  u.country,
+  u.traffic_source,
+  Min(EXTRACT(DATE From o.created_at))as Cohort_date , 
+  Max(EXTRACT(DATE From o. shipped_at))as lastest_shoping_date,
+  DATE_DIFF(Max(EXTRACT(DATE From o. shipped_at)),
+  Min(EXTRACT(DATE From o.created_at)),MONTH) AS month_diff,
+  ROUND(Sum(sale_price),2)as LTV,
+  Count(DISTINCT o.order_id) as purchase_frequency,
+  Round(SUM(sale_price)/COUNT(DISTINCT o. order_id),2) as average_order_value,
+  FROM bigquery-public-data.thelook_ecommerce.users u
+  join bigquery-public-data.thelook_ecommerce.orders o
+  on u.id = o.user_id
+  join bigquery-public-data.thelook_ecommerce.order_items oi
+  on o.user_id= oi.user_id
+where o.shipped_at is not null
+GROUP BY
+  u.id,
+  u.email,
+  u.gender,
+  u.country,
+  u.traffic_source
